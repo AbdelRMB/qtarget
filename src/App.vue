@@ -51,6 +51,20 @@ export default {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
+    },
+    OpenUrl(url) {
+      fetch(`https://${GetParentResourceName()}/OpenUrl`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+    },
+    CopyToClipboard(text) {
+      fetch(`https://${GetParentResourceName()}/CopyToClipboard`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
     }
   },
   mounted() {
