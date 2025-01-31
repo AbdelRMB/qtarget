@@ -69,6 +69,42 @@ export default {
   },
   mounted() {
     window.addEventListener('message', this.handleMessage);
+    document.addEventListener('keydown', (event) => {
+      switch (event.key) {
+        case 'Escape':
+        case 'Backspace': {
+          window.postMessage({ action: "leftTarget" });
+          this.showUi(false);
+        }
+      }
+    });
+    document.addEventListener('mousedown', (event) => {
+      switch (event.which) {
+        case 1: {
+          const id = event.target.id;
+          if (id) {
+            window.postMessage({ action: "selectTarget", id: id });
+          } else {
+            window.postMessage({ action: "leftTarget" });
+          }
+          this.showUi(false);
+          break;
+        }
+        case 3: { // Clic droit
+          window.postMessage({ action: "leftTarget" });
+          this.showUi(false);
+          break;
+        }
+      }
+    });
+    document.addEventListener('mouseover', (event) => {
+      const element = event.target;
+      if (element.id) document.getElementById(element.id).style.color = 'rgb(242, 46, 82)';
+    });
+    document.addEventListener('mouseout', (event) => {
+      const element = event.target;
+      if (element.id) document.getElementById(element.id).style.color = 'white';
+    });
   },
   beforeUnmount() {
     window.removeEventListener('message', this.handleMessage);
